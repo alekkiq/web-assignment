@@ -1,0 +1,48 @@
+.container > * {
+    max-width: var(--layout-content);
+
+    width: calc(100% - (var(--common-gap) * 2));
+    margin-left: max(calc((100vw - var(--layout-content)) / 2), var(--common-gap));
+    margin-right: max(calc((100vw - var(--layout-content)) / 2), var(--common-gap));
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.alignwide {
+    max-width: var(--layout-wide);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.alignnormal {
+    max-width: var(--layout-content);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignultra {
+    max-width: var(--layout-ultra);
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 100% !important;
+}
+
+.alignfull {
+    max-width: none !important;
+    width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+}

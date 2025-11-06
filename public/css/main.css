@@ -1,0 +1,18 @@
+@import "reset.css";
+
+/* generic/ */
+@import "generic/variables.css";
+@import "generic/fonts.css";
+@import "generic/typography.css";
+@import "generic/layout.css";
+@import "generic/utilities.css";
+@import "generic/core.css";
+
+/* components/ */
+@import "components/buttons.css";
+
+/* elements/ */
+@import "elements/header.css";
+@import "elements/footer.css";
+@import "elements/map.css";
+@import "elements/restaurant-list.css";

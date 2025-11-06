@@ -1,0 +1,39 @@
+body {
+    /* Layout variables */
+    --default-scrollbar: 15px;
+
+    --common-gap: 1rem;
+    --layout-wide: 80rem;
+    --layout-content: 52rem;
+    --layout-ultra: 100rem;
+
+    --layout-offset-content: calc( var(--layout-content) / 2 );
+    --layout-offset-wide: calc( var(--layout-wide) / 2 + calc( var(--common-gap) / 2 ) - calc( var(--default-scrollbar) / 2 ) );
+    --layout-offset-ultra: calc( var(--layout-ultra) / 2 + calc( var(--common-gap) / 2 ) - calc( var(--default-scrollbar) / 2 ) );
+
+    /* Color variables */
+    --light-gray: #F5F5F0;
+    --tan: #E6D8C3;
+    --brown: #C2A68C;
+    --green: #5D866C;
+    --dark-green: color-mix(in srgb, #5D866C 82.5%, black);
+    --white: #FAFAFA;
+    --black: #202020;
+    --dark-gray: #D3D3D3;
+
+    /* Font-size clamp variables */
+    --font-huge: clamp(1.75rem, 2rem + ((1vw - 0.2rem) * 1.5), 2.25rem); /* h1 */
+    --font-large: clamp(1.25rem, 1.25rem + ((1vw - 0.2rem) * 0.417), 1.5rem); /* h2 */
+    --font-big: clamp(1.125rem, 1.125rem + ((1vw - 0.2rem) * 0.208), 1.25rem); /* h3 */
+    --font-medium: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.208), 1.125rem); /* h4, larger paragraphs/labels */
+    --font-base: 1rem; /* paragraphs */
+    --font-small: 0.875rem; /* smaller paragraphs/labels */
+    --font-tiny: 0.75rem; /* smallest paragraphs/labels */
+
+    /* Breakpoint size variables */
+    --bp-mobile: 482px; /* 0 - 482px */
+    --bp-sm: 762px;     /* 483 - 762px */
+    --bp-md: 1025px;    /* 763 - 1025px */
+    --bp-lg: 1280px;    /* 1026 - 1280px */
+    --bp-xl: 1440px;    /* 1281 - 1440px */
+}
