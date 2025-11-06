@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../css/main.css">
+  <script src="../js/main.js" type="module" defer></script>
+
+  <!-- Leaflet tags -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+  <title>Home - Foonder</title>
+</head>
+<body>
+  <div class="site-container">
+    <!-- Global header / navbar -->
+    <header id="site-header" class="container alignfull">
+      <div class="header-wrapper wrapper">
+        <h1 id="brand-title">
+          <img class="icon" src="../img/icons/utensils.svg" aria-hidden="true">
+          <span>Foonder</span>
+        </h1>
+        <div id="login" class="wrapper">
+          <!--<div id="user-preview" class="wrapper hidden">
+            <img class="user-avatar" src="../img/placeholders/profile-avatar-plh.png" alt="Profile avatar placeholder">
+            <span class="username">Replace This</span>
+          </div>
+          <button id="open-login" class="button  hidden" aria-controls="login-dialog" aria-haspopup="dialog">
+            <img class="icon" src="../img/icons/login.svg" aria-hidden="true">
+            <span>Login</span>
+          </button>-->
+          <details id="menu">
+            <summary class="menu-toggle">
+              <img class="open" src="../img/icons/menu.svg" alt="Menu hamburger">
+              <span class="sr-only">Open menu</span>
+            </summary>
+            <div class="menu-content">
+              <div class="user-preview">
+                <img class="user-avatar" src="../img/placeholders/profile-avatar-plh.png" alt="Profile avatar placeholder">
+                <span class="username">Replace This</span>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </header>
+    <!-- Content block -->
+    <main class="alignfull container">
+      <div class="alignwide columns columns-2">
+        <div class="columns">
+          <details class="card card-collapsible"> <!-- card 1: favorite restaurant -->
+            <summary class="wrapper">
+              <h2 class="heading-icon">
+                <img class="icon icon-small" src="../img/icons/star.svg" alt="" aria-hidden="true">
+                <span>Favorite restaurant</span>
+              </h2>
+              <img class="icon icon-small" src="../img/icons/chevron-down.svg" alt="">
+            </summary>
+            <div>
+              <p>You have not set a restaurant as favorite yet.</p>
+            </div>
+          </details>
+          <div class="card">
+            <h2 class="heading-icon">
+              <img class="icon icon-small" src="../img/icons/map-marker.svg" alt="">
+              <span>Restaurants</span>
+            </h2>
+            <div id="restaurants">
+              <div id="filter-controls" class="filters">
+                <input id="filter-search" type="search" placeholder="Search by name or address" />
+                <select id="filter-city"><option value="">All cities</option></select>
+                <select id="sort-by">
+                  <option value="name-asc">Name A–Z</option>
+                  <option value="name-desc">Name Z–A</option>
+                  <option value="nearest">Nearest</option>
+                </select>
+                <button id="use-location" type="button">Use my location</button>
+              </div>
+              <div id="restaurants-list">
+                <h3>Restaurant fetching failed. Try again later.</h3>
+                <!-- Fetched content appears here -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="map-wrapper">
+          <div id="map"></div>
+        </div>
+      </div>
+    </main>
+    <!-- Global footer -->
+    <footer id="site-footer" class="container alignfull">
+      <div class="footer-wrapper wrapper">
+        <p id="copyright">&copy; Aleksi Putkonen 2025</p>
+        <a href="" target="_blank" rel="noopener" title="Project source on GitHub (opens in a new window)">Project source</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Login/Register dialog -->
+  <dialog id="login-dialog" class="modal">
+    <button class="close-modal"></button>
+  </dialog>
+
+  <!-- User info update dialog -->
+  <dialog id="update-profile" class="modal">
+    <button class="close-modal"></button>
+  </dialog>
+
+</body>
+</html>
