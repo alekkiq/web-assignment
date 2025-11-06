@@ -1,0 +1,33 @@
+#restaurants-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-block: 1rem;
+    padding-block: 0.5rem;
+
+    height: 35dvh;
+    overflow-y: scroll;
+
+    gap: 1rem;
+
+    & .restaurant {
+        width: 100%;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-gray);
+
+        & > summary {
+            padding-block: .5rem;
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+
+        & > .restaurant-info {
+            display: flex;
+            flex-direction: column;
+            row-gap: .675rem;
+            padding-block: .75rem;
+        }
+    }
+}
