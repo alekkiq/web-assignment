@@ -7,21 +7,26 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    column-gap: 0.125rem;
-    padding: 0.25rem 0.675rem;
-    border-radius: 0.375rem;
+    column-gap: .125rem;
+    height: 40px;
+    padding: .5rem .75rem;
+    border-radius: .375rem;
 
+    transition: all .25s ease;
+
+  &.button-only-icon {
+    padding-block: .5rem;
+    padding-inline: .5rem;
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  &.button-primary {
     background: var(--green);
     color: var(--white);
-
-    transition: all 0.25s ease;
-
-    & .icon {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
 
     &:hover, &:focus {
         background: var(--dark-green);
     }
+  }
 }

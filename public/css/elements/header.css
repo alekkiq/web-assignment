@@ -21,20 +21,15 @@
             position: relative;
 
             & > .menu-toggle {
-                width: 2rem; height: 2rem;
-
+                width: 3rem; height: 3rem;
                 cursor: pointer;
 
-                & .icon.close {
-                    display: none;
-                    object-fit: cover;
+                & > img {
+                  border-radius: 9999px;
+                  border: 2px solid var(--dark-gray);
                 }
 
-                & .icon.open {
-                    display: block;
-                }
-
-                /* Hide default <details> chevron */
+                /* Hide default <summary> chevron */
                 list-style: none;
                 &::marker, &::-webkit-details-marker {
                     display: none;

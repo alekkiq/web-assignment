@@ -1,33 +1,58 @@
-#restaurants-list {
+#restaurants {
+  & #filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-block: 1rem;
+
+    & > .wrapper {
+      width: 100%;
+    }
+  }
+
+  & #restaurants-list {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
     margin-block: 1rem;
-    padding-block: 0.5rem;
+    padding-block: .5rem;
 
-    height: 35dvh;
+    max-height: 50dvh;
     overflow-y: scroll;
 
-    gap: 1rem;
-
     & .restaurant {
-        width: 100%;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--dark-gray);
+      width: 100%;
+      padding-block: 1rem;
+      padding-inline: .25rem;
+      border-top: 1px solid var(--dark-gray);
 
-        & > summary {
-            padding-block: .5rem;
+      & > summary {
+        padding-block: .5rem;
 
-            &::-webkit-details-marker {
-                display: none;
-            }
+        &::-webkit-details-marker {
+          display: none;
         }
 
-        & > .restaurant-info {
-            display: flex;
-            flex-direction: column;
-            row-gap: .675rem;
-            padding-block: .75rem;
+        & > .icon {
+          transition: all 300ms ease;
         }
+      }
+
+      & > .restaurant-info {
+        display: flex;
+        flex-direction: column;
+        row-gap: .75rem;
+        padding-block: .75rem;
+
+        & > .restaurant-buttons {
+          margin-block-start: 1rem;
+          & :nth-child(1) {width: 100%;}
+        }
+      }
+
+      &[open] > summary > .icon {
+        transform: rotate(180deg);
+      }
     }
+  }
 }

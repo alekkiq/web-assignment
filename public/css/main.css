@@ -7,6 +7,7 @@
 @import "generic/layout.css";
 @import "generic/utilities.css";
 @import "generic/core.css";
+@import "generic/forms.css";
 
 /* components/ */
 @import "components/buttons.css";

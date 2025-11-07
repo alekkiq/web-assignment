@@ -1,12 +1,18 @@
 import { getAllRestaurants, getRestaurant } from './api/fetchRestaurants.js';
 import { initRestaurantList } from './restaurantList.js';
-import { initMap } from './map.js';
+import { drawMapMarkers, initMap } from './map.js';
+import { getClientCoords } from "./utils.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-  initMap();
-
+  const clientCoords = await getClientCoords();
   const restaurants = await getAllRestaurants();
+
+  console.log(clientCoords);
+
+  const map = initMap('map', clientCoords)
+  drawMapMarkers(map, restaurants);
+
   const restaurantList = document.getElementById('restaurants');
 
-  initRestaurantList(restaurants, restaurantList);
-})
+  initRestaurantList(restaurants, restaurantList, clientCoords, map);
+});

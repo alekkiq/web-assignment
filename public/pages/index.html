@@ -37,13 +37,14 @@
           </button>-->
           <details id="menu">
             <summary class="menu-toggle">
-              <img class="open" src="../img/icons/menu.svg" alt="Menu hamburger">
+              <img class="open" src="../img/placeholders/profile-avatar-plh.png" alt="User avatar">
               <span class="sr-only">Open menu</span>
             </summary>
             <div class="menu-content">
               <div class="user-preview">
-                <img class="user-avatar" src="../img/placeholders/profile-avatar-plh.png" alt="Profile avatar placeholder">
-                <span class="username">Replace This</span>
+                <span class="username">
+                  logged-in-shit-here
+                </span>
               </div>
             </div>
           </details>
@@ -57,30 +58,34 @@
           <details class="card card-collapsible"> <!-- card 1: favorite restaurant -->
             <summary class="wrapper">
               <h2 class="heading-icon">
-                <img class="icon icon-small" src="../img/icons/star.svg" alt="" aria-hidden="true">
+                <img class="icon icon-small" src="../img/icons/star.svg" alt="Star icon" aria-hidden="true">
                 <span>Favorite restaurant</span>
               </h2>
-              <img class="icon icon-small" src="../img/icons/chevron-down.svg" alt="">
+              <img class="icon icon-small" src="../img/icons/chevron-down.svg" alt="Chevron down" aria-hidden="true">
             </summary>
-            <div>
+            <div id="favorite-restaurant">
               <p>You have not set a restaurant as favorite yet.</p>
             </div>
           </details>
           <div class="card">
             <h2 class="heading-icon">
-              <img class="icon icon-small" src="../img/icons/map-marker.svg" alt="">
+              <img class="icon icon-small" src="../img/icons/map-marker.svg" alt="Map marker" aria-hidden="true">
               <span>Restaurants</span>
             </h2>
             <div id="restaurants">
               <div id="filter-controls" class="filters">
-                <input id="filter-search" type="search" placeholder="Search by name or address" />
-                <select id="filter-city"><option value="">All cities</option></select>
-                <select id="sort-by">
-                  <option value="name-asc">Name A–Z</option>
-                  <option value="name-desc">Name Z–A</option>
-                  <option value="nearest">Nearest</option>
-                </select>
-                <button id="use-location" type="button">Use my location</button>
+                <label for="filter-search" class="sr-only">Search restaurants</label>
+                <input id="filter-search" type="search" placeholder="Search by name or address  &#128269;" />
+                <div class="wrapper">
+                  <label for="filter-city" class="sr-only">Filter by city</label>
+                  <select id="filter-city"><option value="">All cities</option></select>
+                  <label for="sort-by" class="sr-only">List sorting</label>
+                  <select id="sort-by">
+                    <option value="name-asc">Name A–Z</option>
+                    <option value="name-desc">Name Z–A</option>
+                    <option value="nearest">Nearest</option>
+                  </select>
+                </div>
               </div>
               <div id="restaurants-list">
                 <h3>Restaurant fetching failed. Try again later.</h3>
