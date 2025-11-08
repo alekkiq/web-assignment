@@ -4,8 +4,14 @@
 
 import { errorMessage, getClientCoords } from "./utils.js";
 
-export const initMap = (targetId = 'map', startingCoords) => {
-  const map = L.map(targetId).setView([startingCoords.lat, startingCoords.long], 14);
+/**
+ * Initiate a Leaflet map instance.
+ * @param {String} targetId the ID of the map target element
+ * @param {Object<lat: Number, long: Number>}startingCoords desired coordinates to set the view on initially
+ * @returns {*} the newly created leaflet map
+ */
+export const initMap = (targetId = 'map') => {
+  const map = L.map(targetId).setView([65, 26], 5); // approx center of finland
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -17,17 +23,20 @@ export const initMap = (targetId = 'map', startingCoords) => {
 /**
  * Draws a map marker for each of the restaurants given.
  * @param map the Leaflet map instance
- * @param restaurants locations to add a marker for
+ * @param {Array<Object>} restaurants locations to add a marker for
  */
 export const drawMapMarkers = (map, restaurants) => {
-  if (!restaurants.length) return;
+    if (!restaurants || !restaurants.length) return;
 
-  restaurants.forEach((r) => {
-    if (r.location.coordinates) {
-      const [long, lat] = r.location.coordinates;
-      L.marker([lat, long]).addTo(map);
-    }
-  });
+    restaurants.forEach(r => {
+        const [long, lat] = r.location.coordinates;
+        const marker = L.marker([lat, long]).addTo(map);
+
+        marker.bindPopup(`
+          <h4>${r.name}</h4>
+          <p>${r.address}, ${r.postalCode}, ${r.city}</p>
+        `);
+    });
 }
 
 /**

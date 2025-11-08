@@ -18,6 +18,12 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+
+    &.columns-2 {
+        @media screen and (min-width: 1025px) {
+            grid-template-columns: 1fr 1.25fr;
+        }
+    }
 }
 
 .alignwide {

@@ -3,43 +3,17 @@
  * fetched from the API.
  */
 
-import { errorMessage, scrollToElementCenter } from "./utils.js";
+import { errorMessage, scrollToElementCenter, calculateDistance } from "./utils.js";
 import { mapMoveTo } from "./map.js";
 
-// haversine formula for calculating distances between 2 coordinate points
-const calculateDistance = (from, to) => {
-  const toRad = (deg) => {
-    return deg * Math.PI / 180;
-  }
-  const R = 6371 // earth radius
-
-  const lat1 = toRad(from.lat);
-  const lon1 = toRad(from.long);
-  const lat2 = toRad(to.lat);
-  const lon2 = toRad(to.long);
-
-  const {sin, cos, sqrt, atan2} = Math;
-
-  const dLat = lat2 - lat1;
-  const dLon = lon2 - lon1;
-
-  const a = sin(dLat / 2) * sin(dLat / 2)
-                  + cos(lat1) * cos(lat2)
-                  * sin(dLon / 2) * sin(dLon / 2)
-  const c = 2 * atan2(sqrt(a), sqrt(1 - a));
-  const d = R * c;
-
-  return d.toFixed(2);
-}
-
-const createRestaurant = (restaurant, target, clientCoords, mapInstance) => {
+const createRestaurant = (restaurant, target, mapInstance) => {
   const element = document.createElement('details');
   element.classList.add('restaurant');
   element.name = 'restaurant';
   element.id = restaurant._id;
 
   const [long, lat] = restaurant.location.coordinates;
-  const distance = calculateDistance(clientCoords, {lat: lat, long: long});
+  // const distance = calculateDistance(clientCoords, {lat: lat, long: long});
 
   element.innerHTML = `
     <summary class="wrapper">
@@ -47,7 +21,7 @@ const createRestaurant = (restaurant, target, clientCoords, mapInstance) => {
       <img class="icon icon-small" src="../img/icons/chevron-down.svg" alt="Chevron down" aria-hidden="true">
     </summary>
     <div class="restaurant-info">
-      <p class="address">${restaurant.address}, ${restaurant.postalCode}, ${restaurant.city} - ${distance}km</p>
+      <p class="address">${restaurant.address}, ${restaurant.postalCode}, ${restaurant.city}</p>
       <p class="phone">${restaurant.phone}</p>
       <p class="company">${restaurant.company}</p>
       <div class="restaurant-buttons wrapper">
@@ -73,7 +47,7 @@ const createRestaurant = (restaurant, target, clientCoords, mapInstance) => {
   });
 }
 
-export const initRestaurantList = (restaurants, rootElement, position, mapInstance) => {
+export const initRestaurantList = (restaurants, rootElement, mapInstance) => {
   const initialArray = Array.isArray(restaurants) ? restaurants : [];
 
   const controls = {
@@ -83,7 +57,7 @@ export const initRestaurantList = (restaurants, rootElement, position, mapInstan
     container: rootElement.querySelector('#restaurants-list') || rootElement
   }
 
-  let clientCoords = position;
+  let clientCoords = null;
 
   // populate the city <select> filter
   const cities = new Set();
@@ -136,13 +110,16 @@ export const initRestaurantList = (restaurants, rootElement, position, mapInstan
       return;
     }
 
-    results.forEach(restaurant => createRestaurant(restaurant, controls.container, clientCoords, mapInstance));
+    results.forEach(restaurant => createRestaurant(restaurant, controls.container, mapInstance));
   }
 
   // listeners for sort/filtering
   controls.search.addEventListener('input', renderList);
   controls.city.addEventListener('change', renderList);
-  controls.sort.addEventListener('change', renderList);
+  controls.sort.addEventListener('change', (event) => {
+    console.log(event.target.value);
+    renderList();
+  });
 
   renderList();
 }

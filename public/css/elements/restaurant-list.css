@@ -17,14 +17,14 @@
     margin-block: 1rem;
     padding-block: .5rem;
 
-    max-height: 50dvh;
+    height: 50dvh;
     overflow-y: scroll;
 
     & .restaurant {
       width: 100%;
       padding-block: 1rem;
       padding-inline: .25rem;
-      border-top: 1px solid var(--dark-gray);
+      border-bottom: 1px solid var(--dark-gray);
 
       & > summary {
         padding-block: .5rem;
