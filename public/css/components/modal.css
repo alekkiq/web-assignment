@@ -1,0 +1,16 @@
+.modal {
+    max-width: 350px;
+    width: 100%;
+    border: 2px solid var(--dark-gray);
+    border-radius: .125em;
+    padding: 0;
+
+    & > .panel {
+        padding-block: 1rem;
+        padding-inline: .75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+}

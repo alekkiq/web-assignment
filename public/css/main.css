@@ -11,6 +11,8 @@
 
 /* components/ */
 @import "components/buttons.css";
+@import "components/modal.css";
+@import "components/tabs.css";
 
 /* elements/ */
 @import "elements/header.css";

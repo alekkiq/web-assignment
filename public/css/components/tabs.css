@@ -1,0 +1,31 @@
+.tabs {
+    & > .tabs-controls {
+        display: flex;
+
+        & > .tab {
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: var(--font-medium);
+            flex: 1;
+            padding: .75rem 1rem;
+
+            &.active, &:hover, &:focus {
+                background: var(--light-gray);
+            }
+        }
+
+    }
+
+    & > .panel {
+        display: none;
+        padding-block: 1rem;
+        padding-inline: .75rem;
+
+        &.active {
+            display: block;
+            background: var(--light-gray);
+        }
+    }
+}

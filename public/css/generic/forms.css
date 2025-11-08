@@ -2,15 +2,42 @@
 
 input, select {
   font-family: 'Poppins', sans-serif;
-  font-size: var(--font-medium);
-  font-weight: 500;
+  font-size: var(--font-base);
+  font-weight: 400;
 }
 
-input[type="text"], input[type="search"], select {
+input[type="text"], input[type="search"], input[type="password"], input[type="email"], select {
+  appearance: none;
+  -webkit-appearance: none;
+  line-height: 1;
   background: var(--white);
   width: 100%;
   border: 2px solid var(--dark-gray);
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.125em;
+  padding: .5rem .75rem;
+  border-radius: .125em;
   height: 40px;
+}
+
+input[type="file"] {
+  border: 2px solid var(--dark-gray);
+  border-radius: .125em;
+
+  &::file-selector-button {
+    height: 40px;
+    padding: .5rem .75rem;
+    font-size: var(--font-base);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all .25s ease;
+  }
+}
+
+form.styled-form {
+  .row {
+    margin-bottom: .75rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: .25rem;
+  }
 }
