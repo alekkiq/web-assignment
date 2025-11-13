@@ -79,5 +79,25 @@ export const isUserLoggedIn = async () => {
 export const updateUser = async (token, data) => {
   const url = `${BASE_URL}/users`;
 
-  // TODO
+  if (!token) return false;
+
+  const userToUpdate = await getUserByToken(token);
+
+  const {
+    username,
+    password,
+    email,
+    favouriteRestaurant,
+    avatar
+  } = data;
+
+  const result = await fetchData(url, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: {
+      // TODO
+    }
+  })
 }
