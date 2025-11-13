@@ -3,11 +3,19 @@
  * fetched from the API.
  */
 
-import { errorMessage, scrollToElementCenter, calculateDistance } from "./utils.js";
+import {errorMessage, scrollToElementCenter, calculateDistance, getClientCoords} from './utils.js';
 import { mapMoveTo } from "./map.js";
 
 const restaurantMenuDialog = document.getElementById('restaurant-menu');
+const dailyMenuTarget = restaurantMenuDialog.querySelector('#daily-menu');
+const weeklyMenuTarget = restaurantMenuDialog.querySelector('#weekly-menu');
 
+/**
+ * Creates a restaurant element and appends it to the target container.
+ * @param restaurant restaurant object fetched from the API
+ * @param target target container element where to append the created restaurant element
+ * @param mapInstance Leaflet map instance
+ */
 const createRestaurant = (restaurant, target, mapInstance) => {
   const element = document.createElement('details');
   element.classList.add('restaurant');
@@ -27,7 +35,7 @@ const createRestaurant = (restaurant, target, mapInstance) => {
       <p class="phone">${restaurant.phone}</p>
       <p class="company">${restaurant.company}</p>
       <div class="restaurant-buttons wrapper">
-        <button class="button button-primary show-menus" aria-controls="menus-dialog">Show Menu</button>
+        <button class="button button-primary show-menus" data-open-dialog="restaurant-menu">Show Menu</button>
         <button class="button button-secondary button-only-icon show-on-map" aria-label="Show on map" title="Show on map">
           <img class="icon" src="../img/icons/map-pin.svg" alt="Map with a marker" aria-hidden="true">
         </button>
@@ -58,10 +66,110 @@ const createRestaurant = (restaurant, target, mapInstance) => {
   element.querySelector('button.show-menus').addEventListener('click', (e) => {
     e.preventDefault();
 
-    // TODO - fetch stuff from api, open a dialog with the menus
+    const dailyMenu = {
+      "courses": [
+        {
+          "name": "Traditional frankfurter sauce",
+          "price": "2,95€",
+          "diets": [
+            "A",
+            "L",
+            "M"
+          ]
+        },
+        {
+          "name": "Mashed potatoes",
+          "price": "2,95€",
+          "diets": [
+            "*",
+            "A",
+            "G",
+            "ILM",
+            "L"
+          ]
+        },
+        {
+          "name": "Asian fish soup\n",
+          "price": "5,60€",
+          "diets": [
+            "*",
+            "A",
+            "G",
+            "ILM",
+            "L",
+            "M"
+          ]
+        },
+        {
+          "name": "Cheese and vegetable purée soup",
+          "price": "5,60€",
+          "diets": [
+            "*",
+            "A",
+            "G",
+            "ILM",
+            "L"
+          ]
+        }
+      ]
+    }
+
+    const weeklyMenu = {"days":[{"date":"Saturday 15 November","courses":[{"name":"Lohilasagnettea ja lämpimiä kasviksia","diets":"L"},{"name":"Härkis-nuudeliwokkia ja lämpimiä kasviksia","diets":"M"},{"name":"Tacoja jauheliha-kasvistäytteellä, jalapenoja ja valkosipulikermaviiliä","diets":"G, L"},{"name":"Herkkusienikeittoa","diets":"L"}]},{"date":"Saturday 15 November","courses":[{"name":"Kasvis-herkkusienigratiinia","diets":"L"},{"name":"Marokkolaiset kikhernepihvit, paprikasalsaa, lämpimiä kasviksia ja täysjyväriisiä","diets":"G, M"},{"name":"Broileria hapan-imeläkastikkeessa ja täysjyväriisiä","diets":"G, M"},{"name":"Kalaseljanka","diets":"G, M"}]},{"date":"Saturday 15 November","courses":[{"name":"Koskenlaskijan silakat, lämpimiä kasviksia ja keitettyä perunaa","diets":"L"},{"name":"Falafelpyörykät tomaattikastikkeessa ja moniviljalisuketta","diets":"M"},{"name":"Pippurista härkäpataa, lämpimiä kasviksia ja moniviljalisuketta","diets":"L"},{"name":"Juuressosekeittoa","diets":"G, L"}]},{"date":"Saturday 15 November","courses":[{"name":"Broileria paprikakastikkeessa, lämpimiä kasviksia ja täysjyväriisiä","diets":"L"},{"name":"Luomutofu-pinaattipastakastiketta","diets":"VL"},{"name":"Kasvis-soijarisottoa ja ananas-chilisalsaa","diets":"G, M"},{"name":"Kirkasta kalkkuna-vihanneskeittoa","diets":"G, M"}]},{"date":"Saturday 15 November","courses":[{"name":"Kalkkuna-kasviswokkia ja lämpimiä kasviksia","diets":"M"},{"name":"Quornia keltaisessa kasviskastikkeessa, lämpimiä kasviksia ja täysjyväriisiä","diets":"G, L"},{"name":"Kala-katkarapupaellaa ja valkosipuliaiolia","diets":"G, M"},{"name":"Tomaattista kikhernekeittoa luomukikherneillä","diets":"G, M"}]}]}
+
+    // TODO - fetch stuff from api, replace the hardcoded objects above
+    createRestaurantDailyMenu(dailyMenu);
+    createRestaurantWeeklyMenu(weeklyMenu); // TODO - pass weekly menu object
   });
 }
 
+/**
+ * Creates the daily menu content inside the restaurant menu dialog.
+ * @param dailyMenu the daily menu object of the selected restaurant fetched from the API
+ */
+const createRestaurantDailyMenu = (dailyMenu) => {
+  dailyMenuTarget.innerHTML = ''; // clear previous content
+
+  if (dailyMenu.courses.length === 0 || !dailyMenu.courses) {
+    dailyMenuTarget.appendChild(errorMessage('No menu available for today.'));
+    return;
+  }
+
+  dailyMenu.courses.forEach((course) => {
+    const courseElement = document.createElement('p');
+    courseElement.insertAdjacentHTML('beforeend', course.name);
+
+    if (course.diets && course.diets.length) {
+      courseElement.insertAdjacentHTML('beforeend', `;<br>(${course.diets.join(', ')})`);
+    }
+
+    if (course.price) {
+      courseElement.insertAdjacentHTML('beforeend', ` / <strong>${course.price}</strong>`);
+    }
+
+    dailyMenuTarget.appendChild(courseElement);
+  });
+}
+
+const createRestaurantWeeklyMenu = (weeklyMenu) => {
+  weeklyMenuTarget.innerHTML = ''; // clear previous content
+
+  if (weeklyMenu.days.length === 0 || !weeklyMenu.days) {
+    weeklyMenuTarget.appendChild(errorMessage('No weekly menu available.'));
+    return;
+  }
+
+  weeklyMenu.days.forEach((day) => {
+    const dayContainer = document.createElement('div');
+
+  });
+}
+
+/**
+ * Initializes the restaurant list with filtering and sorting capabilities.
+ * @param {Array<Object>} restaurants the array of restaurant objects fetched from the API
+ * @param {HTMLElement} rootElement the root element containing the restaurant list and controls
+ * @param {*} mapInstance the Leaflet map instance
+ */
 export const initRestaurantList = (restaurants, rootElement, mapInstance) => {
   const initialArray = Array.isArray(restaurants) ? restaurants : [];
 
