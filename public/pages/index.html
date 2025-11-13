@@ -104,11 +104,11 @@
 
   <!-- Login/Register dialog -->
   <dialog id="login-dialog" class="modal tabs">
-    <div id="auth-tabs" class="tabs-controls" role="tablist" aria-label="Auth tabs">
-      <button id="tab-login" class="tab active" aria-controls="login-panel">Login</button>
-      <button id="tab-register" class="tab" aria-controls="register-panel">Register</button>
+    <div class="tabs-controls" role="tablist" aria-label="Auth tabs">
+      <button class="tab active" aria-controls="login-panel">Login</button>
+      <button class="tab" aria-controls="register-panel">Register</button>
     </div>
-    <section id="login-panel" class="panel active">
+    <section class="panel active">
       <form id="login-form" class="styled-form">
         <div class="row">
           <label for="login-username">Username *</label>
@@ -123,7 +123,7 @@
         </div>
       </form>
     </section>
-    <section id="register-panel" class="panel">
+    <section class="panel">
       <form id="register-form" class="styled-form">
         <div class="row">
           <label for="reg-username">Username *</label>
@@ -151,16 +151,16 @@
 
   <!-- User info update dialog -->
   <dialog id="update-profile" class="modal">
-    <section id="update-panel" class="panel">
+    <section class="panel">
       <h3>Edit profile</h3>
       <form id="update-form" class="styled-form">
         <div class="row">
           <label for="update-username">Username</label>
-          <input id="update-username" name="name" type="text" placeholder="New username">
+          <input id="update-username" name="username" type="text" placeholder="New username">
         </div>
         <div class="row">
           <label for="update-avatar">Avatar</label>
-          <input type="file" name="avatar" id="update-avatar" accept="image/png, image/jpeg, image/webp, image/jpg">
+          <input id="update-avatar" type="file" name="avatar" accept="image/png, image/jpeg, image/webp, image/jpg">
         </div>
         <div class="row actions">
           <button type="submit" class="button button-primary">Update</button>
@@ -172,15 +172,17 @@
 
   <!-- Restaurant menu dialog -->
   <dialog id="restaurant-menu" class="modal tabs">
-    <div id="menu-tabs" class="tabs-controls" role="tablist" aria-label="Menu tabs">
-      <button id="tab-daily" class="tab active" aria-controls="daily-panel">Today</button>
-      <button id="tab-weekly" class="tab" aria-controls="weekly-panel">This week</button>
+    <div class="tabs-controls" role="tablist" aria-label="Menu tabs">
+      <button class="tab active" aria-controls="daily-panel">Today</button>
+      <button class="tab" aria-controls="weekly-panel">This week</button>
     </div>
-    <section id="daily-panel" class="panel">
-
+    <section class="panel">
+      <h3>Today's menu:</h3>
+      <div id="daily-menu" class="wrapper stacked"><!-- daily menu fetched here --></div>
     </section>
-    <section id="weekly-panel" class="panel">
-
+    <section class="panel">
+      <h3>This week's menu:</h3>
+      <div id="weekly-menu" class="wrapper stacked"><!-- weekly menu fetched here --></div>
     </section>
     <button class="button close-modal">Close modal</button>
   </dialog>
