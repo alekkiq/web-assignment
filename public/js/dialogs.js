@@ -1,92 +1,70 @@
 /**
- * Functionality for the 2 dialogs on the page
- */
-
-const openLoginBtn = document.getElementById('open-login');
-const closeLoginBtn = document.getElementById('close-login');
-const loginDialog = document.getElementById('login-dialog');
-
-const updateProfBtn = document.getElementById('open-profile-update');
-const closeUpdateBtn = document.getElementById('close-update');
-const updateProfDialog = document.getElementById('update-profile');
-
-
-/**
  * Initializes all `<dialog>` elements with the class `modal`.
  *
  * In order to work properly:
  * - each dialog should have a `<button>` with
  * the class `close-modal` as a child.
  * - each dialog should have a unique id.
- * - the document should contain a button with `data-open-dialog="<dialog-id>"`
+ * - the button responsible for opening the dialog should have `data-open-dialog="<dialog-id>"`
  */
 export const initDialogs = () => {
   const dialogs = document.querySelectorAll('dialog.modal');
 
   dialogs.forEach((d) => {
-    const openBtn = document.querySelector(`button[data-open-dialog="${d.id}"]`);
+    const openBtns = document.querySelectorAll(`button[data-open-dialog="${d.id}"]`);
     const closeBtn = d.querySelector('button.close-modal');
 
-    openBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      d.showModal();
+    openBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        d.showModal();
+      });
     });
 
     closeBtn.addEventListener('click', (e) => {
       e.preventDefault();
-
       d.close();
     });
   });
 }
 
-
-
+/**
+ * Initializes all tab components with the class `tabs`.
+ *
+ * In order to work properly:
+ * - each tab component should have buttons with the class `tab` as controls.
+ * - each tab component should have elements with the class `panel` as content panels.
+ * - the order of the buttons should match the order of the panels in the HTML.
+ */
 export const initTabs = () => {
   const tabsElements = document.querySelectorAll('.tabs');
 
   tabsElements.forEach((tabs) => {
-    const controls = tabs.querySelectorAll('button.tab');
-    const panels = tabs.querySelectorAll('.panel');
+    const controls = Array.from(tabs.querySelectorAll('button.tab'));
+    const panels = Array.from(tabs.querySelectorAll('.panel'));
+    if (controls.length === 0 || panels.length === 0) return;
 
-    controls.forEach((ctrl, i) => {
-      const correspondingPanel = panels[i];
+    let activeIndex = controls.findIndex((c) => c.classList.contains('active'));
+    if (activeIndex === -1) activeIndex = panels.findIndex((p) => p.classList.contains('active'));
+    if (activeIndex === -1) activeIndex = 0;
 
-      ctrl.addEventListener('click', (e) => {
-        e.preventDefault();
+    controls.forEach((c, i) => c.classList.toggle('active', i === activeIndex));
+    panels.forEach((p, i) => p.classList.toggle('active', i === activeIndex));
 
-        ctrl.classList.add('active');
-        correspondingPanel.classList.add('active');
-      });
+    tabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('button.tab');
+      if (!btn || !tabs.contains(btn)) return;
+      e.preventDefault();
+
+      const idx = controls.indexOf(btn);
+      if (idx === -1 || idx === activeIndex) return;
+
+      controls[activeIndex].classList.remove('active');
+      panels[activeIndex].classList.remove('active');
+      controls[idx].classList.add('active');
+      panels[idx].classList.add('active');
+
+      activeIndex = idx;
     });
-  });
-}
-
-
-
-
-
-
-
-
-const initAuthTabs = () => {
-  const loginTab = document.getElementById('tab-login');
-  const loginPanel = document.getElementById('login-panel');
-  const registerTab = document.getElementById('tab-register');
-  const registerPanel = document.getElementById('register-panel');
-
-  loginTab.addEventListener('click', () => {
-    loginTab.classList.add('active');
-    loginPanel.classList.add('active');
-    registerTab.classList.remove('active');
-    registerPanel.classList.remove('active');
-  });
-
-  registerTab.addEventListener('click', () => {
-    registerTab.classList.add('active');
-    registerPanel.classList.add('active');
-    loginTab.classList.remove('active');
-    loginPanel.classList.remove('active');
   });
 }
