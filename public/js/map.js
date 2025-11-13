@@ -46,5 +46,5 @@ export const drawMapMarkers = (map, restaurants) => {
  * @param {Number} long target longitude
  */
 export const mapMoveTo = (map, lat, long) => {
-  map.flyTo([lat, long], 15, {animate: true, duration: 2});
+  map.flyTo([lat, long], 14, {animate: true, duration: 2});
 }
