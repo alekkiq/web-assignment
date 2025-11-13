@@ -2,7 +2,7 @@ import { getAllRestaurants } from './api/fetchRestaurants.js';
 import { initRestaurantList } from './restaurantList.js';
 import { drawMapMarkers, initMap} from './map.js';
 import { getClientCoords } from "./utils.js";
-import { initLoginDialog, initUpdateProfileDialog } from './dialogs.js';
+import { initDialogs } from './dialogs.js';
 import { initForms } from './forms.js';
 import { getUserByToken, isUserLoggedIn, logoutUser } from './api/auth.js';
 
@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // initialize the rest
   initRestaurantList(restaurants, restaurantList, map);
-  initLoginDialog();
-  initUpdateProfileDialog();
+  initDialogs();
   initForms();
 
   document.getElementById('logout').addEventListener('click', logoutUser);
