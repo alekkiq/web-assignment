@@ -6,8 +6,8 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="../css/main.css">
-  <!--<script src="../js/main.js" type="module" defer></script>-->
-  <script src="../js/main-demo.js" type="module" defer></script>
+  <script src="../js/main.js" type="module" defer></script>
+  <!--<script src="../js/main-demo.js" type="module" defer></script>-->
 
   <!-- Leaflet tags -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -28,7 +28,7 @@
           <span>Foonder</span>
         </h1>
         <div id="login" class="wrapper">
-          <button id="open-login" role="button" class="button button-primary hide-logged-in" aria-controls="login-dialog" aria-haspopup="dialog">
+          <button id="open-login" role="button" class="button button-primary hide-logged-in" data-open-dialog="login-dialog">
             <img class="icon icon-small" src="../img/icons/login.svg" aria-hidden="true">
             <span>Login</span>
           </button>
@@ -38,7 +38,7 @@
               <span class="sr-only">Open menu</span>
             </summary>
             <div class="menu-content">
-              <button id="open-profile-update" role="button" class="button button-primary">Edit profile</button>
+              <button id="open-profile-update" class="button button-primary" data-open-dialog="update-profile">Edit profile</button>
               <button id="logout" role="button" class="button">Logout</button>
             </div>
           </details>
@@ -49,7 +49,7 @@
     <main class="alignfull container">
       <div class="alignwide columns columns-2">
         <div class="columns">
-          <details class="card card-collapsible"> <!-- card 1: favorite restaurant -->
+          <details class="card card-collapsible show-logged-in"> <!-- card 1: favorite restaurant -->
             <summary class="wrapper">
               <h2 class="heading-icon">
                 <img class="icon icon-small" src="../img/icons/star.svg" alt="Star icon" aria-hidden="true">
@@ -146,6 +146,7 @@
         </div>
       </form>
     </section>
+    <button class="button close-modal">Close modal</button>
   </dialog>
 
   <!-- User info update dialog -->
@@ -165,7 +166,23 @@
           <button type="submit" class="button button-primary">Update</button>
         </div>
       </form>
+      <button class="button close-modal">Close modal</button>
     </section>
+  </dialog>
+
+  <!-- Restaurant menu dialog -->
+  <dialog id="restaurant-menu" class="modal tabs">
+    <div id="menu-tabs" class="tabs-controls" role="tablist" aria-label="Menu tabs">
+      <button id="tab-daily" class="tab active" aria-controls="daily-panel">Today</button>
+      <button id="tab-weekly" class="tab" aria-controls="weekly-panel">This week</button>
+    </div>
+    <section id="daily-panel" class="panel">
+
+    </section>
+    <section id="weekly-panel" class="panel">
+
+    </section>
+    <button class="button close-modal">Close modal</button>
   </dialog>
 </body>
 </html>
