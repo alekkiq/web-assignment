@@ -6,11 +6,13 @@
 import { errorMessage, scrollToElementCenter, calculateDistance } from "./utils.js";
 import { mapMoveTo } from "./map.js";
 
+const restaurantMenuDialog = document.getElementById('restaurant-menu');
+
 const createRestaurant = (restaurant, target, mapInstance) => {
   const element = document.createElement('details');
   element.classList.add('restaurant');
   element.name = 'restaurant';
-  element.id = restaurant._id;
+  element.id = `restaurant-${restaurant._id}`;
 
   const [long, lat] = restaurant.location.coordinates;
   // const distance = calculateDistance(clientCoords, {lat: lat, long: long});
@@ -25,7 +27,7 @@ const createRestaurant = (restaurant, target, mapInstance) => {
       <p class="phone">${restaurant.phone}</p>
       <p class="company">${restaurant.company}</p>
       <div class="restaurant-buttons wrapper">
-        <button class="button button-primary show-menus">Show Menu</button>
+        <button class="button button-primary show-menus" aria-controls="menus-dialog">Show Menu</button>
         <button class="button button-secondary button-only-icon show-on-map" aria-label="Show on map" title="Show on map">
           <img class="icon" src="../img/icons/map-pin.svg" alt="Map with a marker" aria-hidden="true">
         </button>
@@ -44,6 +46,19 @@ const createRestaurant = (restaurant, target, mapInstance) => {
 
     scrollToElementCenter('map')
     mapMoveTo(mapInstance, lat, long);
+  });
+
+  element.querySelector('button.favorite-restaurant').addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    // TODO - fetch with put to update current users user.favoriteRestaurant as restaurant id
+
+  });
+
+  element.querySelector('button.show-menus').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // TODO - fetch stuff from api, open a dialog with the menus
   });
 }
 
