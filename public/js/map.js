@@ -1,20 +1,21 @@
 /**
- * Javascript for the leaflet map setup
- */
-
-import { errorMessage, getClientCoords } from "./utils.js";
-
-/**
  * Initiate a Leaflet map instance.
  * @param {String} targetId the ID of the map target element
- * @param {Object<lat: Number, long: Number>}startingCoords desired coordinates to set the view on initially
  * @returns {*} the newly created leaflet map
  */
 export const initMap = (targetId = 'map') => {
-  const map = L.map(targetId).setView([65, 26], 5); // approx center of finland
+  const map = L.map(targetId, {
+    zoomControl: false,
+  }).setView([65, 26], 4); // approx center of finland
+
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
+    maxZoom: 16,
+    minZoom: 3,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  L.control.zoom({
+    position: 'bottomleft',
   }).addTo(map);
 
   return map;
