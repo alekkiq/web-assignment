@@ -4,6 +4,7 @@ input, select {
   font-family: 'Poppins', sans-serif;
   font-size: var(--font-base);
   font-weight: 400;
+  color: var(--black);
 }
 
 input[type="text"], input[type="search"], input[type="password"], input[type="email"], select {
