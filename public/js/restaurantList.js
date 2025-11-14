@@ -1,6 +1,5 @@
 /**
- * Javascript required for creating elements, e.g. restaurants
- * fetched from the API.
+ * Javascript required for the restaurant list and related logic
  */
 
 import {errorMessage, scrollToElementCenter, calculateDistance, getClientCoords} from './utils.js';
@@ -139,7 +138,7 @@ const createRestaurantDailyMenu = (dailyMenu) => {
     courseElement.insertAdjacentHTML('beforeend', course.name);
 
     if (course.diets && course.diets.length) {
-      courseElement.insertAdjacentHTML('beforeend', `;<br>(${course.diets.join(', ')})`);
+      courseElement.insertAdjacentHTML('beforeend', `;<br>(${course.diets})`);
     }
 
     if (course.price) {
@@ -153,6 +152,8 @@ const createRestaurantDailyMenu = (dailyMenu) => {
 const createRestaurantWeeklyMenu = (weeklyMenu) => {
   weeklyMenuTarget.innerHTML = ''; // clear previous content
 
+  console.log(weeklyMenu);
+
   if (weeklyMenu.days.length === 0 || !weeklyMenu.days) {
     weeklyMenuTarget.appendChild(errorMessage('No weekly menu available.'));
     return;
@@ -161,6 +162,31 @@ const createRestaurantWeeklyMenu = (weeklyMenu) => {
   weeklyMenu.days.forEach((day) => {
     const dayContainer = document.createElement('div');
 
+    if (day.courses.length === 0 || !day.courses) {
+      dayContainer.appendChild(errorMessage('No menu available for this day.'));
+      return;
+    }
+
+    const date = document.createElement('h4');
+    date.textContent = day.date;
+    dayContainer.appendChild(date);
+
+    day.courses.forEach((course) => {
+      const courseElement = document.createElement('p');
+      courseElement.insertAdjacentHTML('beforeend', course.name);
+
+      if (course.diets && course.diets.length) {
+        courseElement.insertAdjacentHTML('beforeend', `;<br>(${course.diets})`);
+      }
+
+      if (course.price) {
+        courseElement.insertAdjacentHTML('beforeend', ` / <strong>${course.price}</strong>`);
+      }
+
+      dayContainer.appendChild(courseElement);
+    });
+
+    weeklyMenuTarget.appendChild(dayContainer);
   });
 }
 
@@ -239,8 +265,10 @@ export const initRestaurantList = (restaurants, rootElement, mapInstance) => {
   // listeners for sort/filtering
   controls.search.addEventListener('input', renderList);
   controls.city.addEventListener('change', renderList);
-  controls.sort.addEventListener('change', (event) => {
-    console.log(event.target.value);
+  controls.sort.addEventListener('change', async (event) => {
+    if (event.target.value == 'nearest' && !clientCoords) {
+      clientCoords = await getClientCoords();
+    }
     renderList();
   });
 
